@@ -51,6 +51,30 @@ public class Locations
 	
 	public void removeLocation(Location inLoc)
 	{
-	
+		if(listOfLocations != null && listOfLocations.length > 0)
+		{
+			if(listOfLocations.length == 1) //simple remove by clearing list
+			{
+				listOfLocations = null;
+			}
+			else
+			{
+				Location[] temp = new Location[listOfLocations.length-1];
+				int j = 0;
+				for(int i = 0; i < listOfLocations.length; i++)
+				{
+					if(inLoc != listOfLocations[i])
+					{
+						temp[j] = listOfLocations[i];
+						j++;
+					}
+				}
+				listOfLocations = new Location[temp.length]; //shrinks list
+				for(int i = 0; i < temp.length; i++)
+				{
+					listOfLocations[i] = temp[i];
+				}
+			}
+		}
 	}
 }
