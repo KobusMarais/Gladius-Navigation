@@ -91,12 +91,14 @@ public class Routes
 				{
 					if(routes.get(count).name == target)
 					{
+						System.out.println("Route found!\n");
 						return routes.get(count);
 					}
 					
 					count++;
 				}
-					
+				
+				System.out.println("Route not contained in DB\n");
 				return null;
 		}
 		
