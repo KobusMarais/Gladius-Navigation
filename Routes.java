@@ -77,7 +77,13 @@ public class Routes
 	
 			return false;
 		}
-	
+		/**
+		 * This returns the route that the user has entered. It will return the calulated route for the user.
+		 *
+		 * @param routeName The name of the saved route in the database
+		 * @return 			The specified route
+		 *
+		 */
 		public Route getRoute(String routeName)
 		{
 				return search(routeName);
@@ -101,14 +107,24 @@ public class Routes
 				System.out.println("Route not contained in DB\n");
 				return null;
 		}
-		
+
+		/**
+		 *This method saves the prefered routes that the user deems useful. It saves the selected route to the preferences database.
+		 *
+		*/
 		public void savePreference()
 		{
 				
 		}
-	
-		public void modifyRoute()
+
+		/**
+		 * This method calculates and returns the simplest routes for people with disabilities
+		 *
+		 * @param currRoute The route that has to be modified
+		 * @return			The modified route
+		 */
+		public Route modifyRoute(Route currRoute)
 		{
-		
+			return new Route("Modified",currRoute);
 		}
 }
