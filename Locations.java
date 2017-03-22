@@ -34,7 +34,19 @@ public class Locations
 	
 	public Location modifyLocation(Location inLoc, String name, String id, GPSObject obj)
 	{
-		
+		if(listOfLocations != null && listOfLocations.length > 0)
+		{
+			Location modified = new Location(name, id, obj); //create new Location
+			for (int i = 0; i < listOfLocations.length; i++) 
+			{
+				if(listOfLocations[i] == inLoc)
+				{
+					listOfLocations[i] = modified;	//replace old location with modified location
+					return modified;
+				}	
+			}
+		}
+		return null;
 	}
 	
 	public void removeLocation(Location inLoc)
