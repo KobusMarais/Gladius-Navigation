@@ -104,7 +104,7 @@ public class Routes
 					
 				while(count < routes.size())
 				{
-					if(routes.get(count).name == target)
+					if(routes.get(count).getName() == target)
 					{
 						System.out.println("Route found!\n");
 						return routes.get(count);
@@ -153,7 +153,7 @@ public class Routes
 								
 								while(addingRoutes)
 								{
-										posibleRoutes.add(new Route(/*Initialize with data extracted from DB*/));
+										possibleRoutes.add(new Route(/*Initialize with data extracted from DB*/));
 										addingRoutes = false;
 								}
 							
