@@ -77,11 +77,28 @@ public class Routes
 	
 			return false;
 		}
-		
-		public Route getRoute(String rName)
+	
+		public Route getRoute(String routeName)
 		{
+				return search(routeName);
+		}
+					
+		public Route search(String target)
+		{
+				int count = 0;
+					
+				while(count < routes.size())
+				{
+					if(routes.get(count).name == target)
+					{
+						return routes.get(count);
+					}
+					
+					count++;
+				}
+					
 				return null;
-		}	
+		}
 		
 		public void savePreference()
 		{
