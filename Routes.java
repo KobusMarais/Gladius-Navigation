@@ -14,7 +14,12 @@ public class Routes
 		{
 				routes = new ArrayList<>();
 		}
-
+	
+		/*
+				This function inserts a Route into the database
+				and furthermore maintains a List of inserted Routes.
+		*/
+	
 		public Boolean addRoute(Route roo)
 		{	
 				routes.add(roo);
@@ -40,6 +45,10 @@ public class Routes
 				}	
 		}
 
+		/*
+				This function deletes a Route from the database
+				using the Route' name as a key.
+		*/
 		public Boolean removeRoute(Route roo)
 		{
 			Boolean routeContainedInDB = true;
@@ -105,6 +114,98 @@ public class Routes
 				}
 				
 				System.out.println("Route not contained in DB\n");
+				return null;
+		}
+	
+		/*
+				This function returns a collection of Routes with a starting
+				Location "from" and end Location "to"
+		
+				Note: Using the start and end Locations as a key may return
+				multiple Routes because Routes can have the same start and end Locations
+				but the wayPoints of each Route may be unique. This behaviour could
+				or could not be desireable (ie: we could provide the user with multiple
+				Routes to the same destination and the users preference(s) will serve
+				as a decider as to which Route he/she wants to take)
+		*/
+		public ArrayList<Route> getRoutes(Location from, Location to)
+		{
+				Boolean locationObjectsAreValid = true;
+			
+				if(locationObjectsAreValid)
+				{
+						//Formulate sql query to extract Routes from the DB with the specified start and end Location.
+						String query = "SELECT FROM Routes ..... WHERE ..";
+					
+						//Connect to the DB
+						Boolean connectionMadeSuccessfully = true;
+				
+						//If connection is made
+						if(connectionMadeSuccessfully)
+						{
+								//Execute the sql query
+								System.out.println("Querying the DB ...");
+								System.out.println("Retrieving Routes!\n");
+							
+								//Add returned Routes to a List of Routes
+								ArrayList<Route> possibleRoutes = new ArrayList<>();
+								Boolean addingRoutes = true;
+								
+								while(addingRoutes)
+								{
+										posibleRoutes.add(new Route(/*Initialize with data extracted from DB*/));
+										addingRoutes = false;
+								}
+							
+								return possibleRoutes;
+						}
+						else//Failed to connect to DB
+						{
+								System.out.println("Connection to Database failed!");
+								return null;
+						}	
+				}
+				else
+				{
+						System.out.println("Locations are invalid.\n");
+				}	
+			
+				return null;
+		}
+	
+		/*
+				This function returns a Route based on a given user preference
+		*/
+		public Route getPreferedRoute(Location from, Location to)
+		{
+				String preferenceA = "simplestRoute";
+				String preferenceB = "shortestRoute";
+			
+				Boolean locationObjectsAreValid = true;
+			
+				if(locationObjectsAreValid)
+				{
+						//Get all possible Routes that can be taken to reach destination
+						ArrayList<Route> possibleRoutes = getRoutes(from, to);
+					
+						//Get preferences from DB
+						String retrievedPref = "simplestRoute";//Mock
+					
+						//Based on preference, return the relavent Route
+						if(retrievedPref == preferenceA)
+						{
+								//return relavent Route from possibleRoutes
+								System.out.println("Returning Simplest-Route.");
+								return new Route();//Mock
+						}
+						else
+						{
+								//return relavent Route from possibleRoutes
+								System.out.println("Returning Shortest-Route.");
+								return new Route();//Mock
+						}
+				}
+			
 				return null;
 		}
 
