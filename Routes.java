@@ -112,8 +112,19 @@ public class Routes
 		 *This method saves the prefered routes that the user deems useful. It saves the selected route to the preferences database.
 		 *
 		*/
-		public void savePreference()
+		public boolean savePreference()
 		{
+			boolean connectionWasMade = true;
+
+			if(connectionWasMade){
+				System.out.println("Preferences are saved");
+				return true;
+
+			}else{
+				System.out.println("Preferences were not saved");
+				return true;
+
+			}
 				
 		}
 
