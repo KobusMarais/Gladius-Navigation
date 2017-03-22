@@ -11,6 +11,11 @@ public class Route
 				path = null;
 		}
 	
+		public Route(String V, Route M)
+		{
+			
+		}
+	
 		public Route(String rN)
 		{
 				name = rN;
