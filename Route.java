@@ -28,6 +28,11 @@ public class Route
 				path = new ArrayList<>();
 				path = clone;
 		}
+	
+		public String getName()
+		{
+				return name;	
+		}
 		
 		public ArrayList<Location> calculateRoute(Location start, Location end)
 		{
