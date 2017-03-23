@@ -1,5 +1,5 @@
 package Navigation;
-import GIS;
+//import GIS;
 
 /**
  * Created by darrenadams on 2017/03/21.
@@ -25,27 +25,27 @@ public class GPSObject {
     public Boolean getCoords(String n)
     {
         //Create GISRequest
-        GISRequest req = new GISRequest(n);
-        GISDataObject obj = GISDataObject::getGISDataObject(req);
-        if(obj == null)
-        {
-            return false;
-        }
-        else
-        {
-            this.coordinates.set(obj);
+        //GISRequest req = new GISRequest(n);
+        //GISDataObject obj = GISDataObject::getGISDataObject(req);
+        //if(obj == null)
+        //{
+          //  return false;
+        //}
+        //else
+        //{
+            this.coordinates.set();
             return true;
-        }
+        //}
     }
 }
 
 class GPSCoords{
-    private float longlat[];
+    private double longlat[];
 
 
     public GPSCoords()
     {
-        longlat = new float[2];
+        longlat = new double[2];
     }
 
     /**
@@ -53,10 +53,11 @@ class GPSCoords{
      * @param obj GIS Module returned data
      *
      */
-    public void set(GISDataObject obj)
+    public void set()
     {
 
-        this.longlat = obj.GPSCoord;
+        this.longlat[0] = -25.756462;
+        this.longlat[1] = 28.231124;
     }
 
 }
