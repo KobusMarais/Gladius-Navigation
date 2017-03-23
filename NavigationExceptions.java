@@ -18,5 +18,5 @@ public class NavigationExceptions extends Exception {
 	public NavigationExceptions(String mesg, Throwable reason) {
 		super(mesg,reason);
 	}
-
+	/* General, all-purpose navigation exception to be raised when unknown errors occur.*/
 }
