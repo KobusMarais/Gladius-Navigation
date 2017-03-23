@@ -22,6 +22,6 @@ public class NotRegistered extends NavigationExceptions {
 	protected String defaultMessage = new String("User is not registered and cannot request a route.");
 	protected Throwable defaultCause = new Throwable(defaultMessage);
 	
-	/*Basic Exception class that will be thrown in the event of an unregistered user trying to 
+	/*Basic Exception class that will be raised in the event of an unregistered user trying to 
 	access functionalities (preferences etc.) reserved for registered users only. */
 }
