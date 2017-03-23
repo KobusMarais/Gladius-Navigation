@@ -1,3 +1,4 @@
+package Navigation
 /**
  * Created by darrenadams on 2017/03/21.
  * Usage: Class presents a Has-A relationship with Location.(Aggregation)
