@@ -1,4 +1,6 @@
 //Created by Jacobus Marais 15188397 21/03/2017
+package Navigation;
+
 public class Locations
 {
 	public Location[] listOfLocations;
@@ -10,8 +12,8 @@ public class Locations
 	
 	public void addLocation(Location inLoc)
 	{
-		
-		if((listOfLocations != null ) && (listOfLocations.length > 0)) //checks if the list has any entries
+		//This will add a location to the List of Saved Locations
+		/*if((listOfLocations != null ) && (listOfLocations.length > 0)) //checks if the list has any entries
 		{
 			Location[] temp = new Location[listOfLocations.length+1]; 
 			for(int i = 0; i < listOfLocations.length; i++)
@@ -29,12 +31,13 @@ public class Locations
 		{
 			listOfLocations = new Location[1];
 			listOfLocations[0] = inLoc;
-		}	
+		}*/	
 	}
 	
 	public Location modifyLocation(Location inLoc, String name, String id, GPSObject obj)
 	{
-		if(listOfLocations != null && listOfLocations.length > 0)
+		//This will modify a location on the List of Saved Locations
+		/*if(listOfLocations != null && listOfLocations.length > 0)
 		{
 			Location modified = new Location(name, id, obj); //create new Location
 			for (int i = 0; i < listOfLocations.length; i++) 
@@ -46,12 +49,15 @@ public class Locations
 				}	
 			}
 		}
-		return null;
+		return null;*/
+		Location modified = new Location(name, id, obj); //create new Location
+		return modified;
 	}
 	
 	public void removeLocation(Location inLoc)
 	{
-		if(listOfLocations != null && listOfLocations.length > 0)
+		//This will remove a location from the List of Saved Locations
+		/*if(listOfLocations != null && listOfLocations.length > 0)
 		{
 			if(listOfLocations.length == 1) //simple remove by clearing list
 			{
@@ -75,6 +81,6 @@ public class Locations
 					listOfLocations[i] = temp[i];
 				}
 			}
-		}
+		}*/
 	}
 }
