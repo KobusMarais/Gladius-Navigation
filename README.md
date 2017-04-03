@@ -1,7 +1,7 @@
 # Computer Science Software Engineering Module Mini-Project Phase 3(Implementation) 
 ## Navigation Team Gladius(iOS)
 ### Documentation
-<a href="http://navigation.codingbench.co.za/" target="_blank">Javadocs</a>
+[External Site : Javadocs](http://navigation.codingbench.co.za/)
 
 ### Members 
 * Darren Adams 
