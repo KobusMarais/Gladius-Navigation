@@ -1,5 +1,6 @@
 # Computer Science Software Engineering Module Mini-Project Phase 3(Implementation) 
-## Navigation Team Gladius(iOS) 
+## Navigation Team Gladius(iOS)
+[Javadocs](Navigation/javadocs/index.html)
 ### Members 
  
 * Darren Adams 
