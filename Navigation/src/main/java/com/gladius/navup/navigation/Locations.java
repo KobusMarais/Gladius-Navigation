@@ -12,6 +12,11 @@ public class Locations
 		listOfLocations = new ArrayList<Location>(); //initialises the list to null
 	}
 
+	/**
+	*	Function will add push a new location to the end of an existing list of locations to form a route
+	*
+	*	@param inLoc	The Location object that will be added to the listOfLocations ArrayList
+	*/
 	public void addLocation(Location inLoc)
 	{
 		listOfLocations.add(inLoc);
@@ -37,6 +42,16 @@ public class Locations
 		}*/
 	}
 
+	/**
+	*	Function will create a new Location object from the given parameters to replace a given Location
+	*
+	*	@param	inLoc	The location that will be replaced by the new location 
+	*	@param	name	The name of the new location
+	*	@param	id	The id of the new location
+	*	@param	obj	The latitude and longitude of the new object
+	*
+	*	@return	the newly created location
+	*/
 	public Location modifyLocation(Location inLoc, String name, String id, GPSObject obj)
 	{
 		Location newLoc = new Location(name, id, obj);
@@ -66,6 +81,11 @@ public class Locations
 		return newLoc;
 	}
 
+	/** 
+	*	Function removes a given location from the ArrayList
+	*	@param inLoc	the location to be removed 
+	*
+	*/
 	public void removeLocation(Location inLoc)
 	{
 		listOfLocations.remove(listOfLocations.indexOf(inLoc));
@@ -96,6 +116,12 @@ public class Locations
 			}
 		}*/
 	}
+	/**
+	*	Function returns a location at a specific location in the ArrayList
+	*
+	*	@param	index	The index in the ArrayList of the location that will be returned
+	*	@return a Location object
+	*/
 	public Location get(int index)
 	{
 		return listOfLocations.get(index);
