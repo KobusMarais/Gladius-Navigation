@@ -4,7 +4,7 @@ package com.gladius.navup.navigation;
  * Created by darrenadams on 2017/03/23.
  * Interface for usage by Access Module
  */
-public interface NavigationInterface {
+public interface Navigation{
 
         /**
      *
