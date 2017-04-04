@@ -43,6 +43,12 @@ public class GPSObject {
             return true;
         }
     }
+    
+    /**
+    *   Function that sets the latitude and longitude from a given array of length 2
+    *
+    *   @param  ob  float array of size 2, the first element represents the longitude of the location and the second element the latitude
+    */
     private void set(float[] ob)
     {
         this.longitude = ob[1];
