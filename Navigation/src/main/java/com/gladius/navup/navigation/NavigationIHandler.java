@@ -49,10 +49,10 @@ public class NavigationIHandler implements Navigation {
 
     public String getRoute(String locations) throws NavigationExceptions
     {
-        String[] locs = {};
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        locs = gson.fromJson(locations,String[].class);
+        String[] locs = gson.fromJson(locations,String[].class);
+
 
         if(locs[0].equals(null) || locs[1].equals(null))
         {
