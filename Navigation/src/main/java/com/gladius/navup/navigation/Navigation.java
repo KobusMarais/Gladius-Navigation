@@ -4,13 +4,13 @@ package com.gladius.navup.navigation;
  * Created by darrenadams on 2017/03/23.
  * Interface for usage by Access Module
  */
-public interface Navigation {
+public interface NavigationInterface {
 
-    /**
+        /**
      *
      * @param inR List of locations
      * @param n name of route
-     * @return JSON string of Route object.{Name,Path[{nameOfStart,locationid,coordinates}{nameOfEnd,locationid,coordinates}{nameOfWaypoints...}}
+     * @return JSON string of Route object.{Name,Path[{nameOfStart,locationid,coordinates}{nameOfEnd,locationid,coordinates}{nameOfWaypoints...}} Example Output: {"name":"IT 4-1 to Centenary 4","path":{"listOfLocations":[{"name":"IT 4-1","locationID":"0","coordinates":{"latitude":1.0,"longitude":14.0}},{"name":"Centenary 4","locationID":"1","coordinates":{"latitude":1.0,"longitude":14.0}}]}}
      * @throws NavigationExceptions
      */
     public String getRoute(Locations inR,String n) throws NavigationExceptions;
@@ -18,7 +18,7 @@ public interface Navigation {
     /**
      *
      * @param loc JSON of array of Strings of locations {Start location[needed] name,End location[needed] name,Optional Waypoints Inbetween}
-     * @return JSON string of Route object.{Name,Path[{nameOfStart,locationid,coordinates}{nameOfEnd,locationid,coordinates}{nameOfWaypoints...}}
+     * @return JSON string of Route object.{Name,Path[{nameOfStart,locationid,coordinates}{nameOfEnd,locationid,coordinates}{nameOfWaypoints...}} Example Output: {"name":"IT 4-1 to Centenary 4","path":{"listOfLocations":[{"name":"IT 4-1","locationID":"0","coordinates":{"latitude":1.0,"longitude":14.0}},{"name":"Centenary 4","locationID":"1","coordinates":{"latitude":1.0,"longitude":14.0}}]}}
      * @throws NavigationExceptions
      */
     public String getRoute(String loc) throws NavigationExceptions;
