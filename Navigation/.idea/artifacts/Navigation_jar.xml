@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Navigation:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Navigation_jar</output-path>
-    <root id="archive" name="Navigation.jar">
-      <element id="module-output" name="Navigation" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/codeartisans/org.json/20161124/org.json-20161124.jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>

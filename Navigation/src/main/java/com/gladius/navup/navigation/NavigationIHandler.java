@@ -47,6 +47,36 @@ public class NavigationIHandler implements Navigation {
 
     }
 
+    public String getRoute(String locations) throws NavigationExceptions
+    {
+        String[] locs = {};
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        locs = gson.fromJson(locations,String[].class);
+
+        if(locs[0].equals(null) || locs[1].equals(null))
+        {
+            throw new IncompleteInformation();
+        }
+
+
+        Locations nL = new Locations();
+        GPSObject sOb = new GPSObject(locs[0]);
+        Location start = new Location(locs[0],"0",sOb);
+        GPSObject eOb = new GPSObject(locs[1]);
+        Location end = new Location(locs[1],"1",eOb);
+        nL.addLocation(start);
+        nL.addLocation(end);
+
+        for(int i = 2; i < locs.length;i++)
+        {
+            nL.addLocation(new Location(locs[i],""+i,new GPSObject(locs[i])));
+        }
+
+        return gson.toJson(new Route(locs[0]+ " to " + locs[1],calculateRoute(nL)));
+    }
+
+
     public Route accessRoute(String rN) {
         return new Route();
 

@@ -17,6 +17,14 @@ public interface Navigation {
 
     /**
      *
+     * @param loc JSON of array of Strings of locations {Start location[needed] name,End location[needed] name,Optional Waypoints Inbetween}
+     * @return JSON string of Route object.{Name,Path[{nameOfStart,locationid,coordinates}{nameOfEnd,locationid,coordinates}{nameOfWaypoints...}}
+     * @throws NavigationExceptions
+     */
+    public String getRoute(String loc) throws NavigationExceptions;
+
+    /**
+     *
      * @param routeName Name of route to find
      * @return route that matches the parameter
      */
