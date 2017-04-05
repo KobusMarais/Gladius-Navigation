@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import com.gladius.navup.navigation.*;
+import gladios.navigation.*;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
