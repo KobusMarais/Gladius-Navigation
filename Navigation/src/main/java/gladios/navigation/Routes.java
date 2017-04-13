@@ -205,26 +205,27 @@ public class Routes
 			
 		Boolean locationObjectsAreValid = true;
 			
-		if(locationObjectsAreValid)
-		{
+		if(locationObjectsAreValid) {
 			//Get all possible Routes that can be taken to reach destination
 			ArrayList<Route> possibleRoutes = getRoutes(loc);
-					
-			//Get preferences from DB
-			String retrievedPref = "simplestRoute";//Mock
-					
-			//Based on preference, return the relavent Route
-			if(retrievedPref == preferenceA)
-			{
-				//return relavent Route from possibleRoutes
-				System.out.println("Returning Simplest-Route.");
-				return loc;
-			}
-			else
-			{
-				//return relavent Route from possibleRoutes
-				System.out.println("Returning Shortest-Route.");
-				return loc;
+			if (possibleRoutes == null) {
+				//No routes, calculate
+				//Entry point to pathfinding
+
+			} else {
+				//Get preferences from DB
+				String retrievedPref = "simplestRoute";//Mock
+
+				//Based on preference, return the relavent Route
+				if (retrievedPref == preferenceA) {
+					//return relavent Route from possibleRoutes
+					System.out.println("Returning Simplest-Route.");
+					return loc;
+				} else {
+					//return relavent Route from possibleRoutes
+					System.out.println("Returning Shortest-Route.");
+					return loc;
+				}
 			}
 		}
 			

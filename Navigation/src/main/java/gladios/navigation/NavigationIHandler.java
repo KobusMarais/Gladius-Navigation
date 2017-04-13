@@ -59,21 +59,28 @@ public class NavigationIHandler implements Navigation {
             throw new IncompleteInformation();
         }
 
-
-        Locations nL = new Locations();
-        GPSObject sOb = new GPSObject(locs[0]);
-        Location start = new Location(locs[0],"0",sOb);
-        GPSObject eOb = new GPSObject(locs[1]);
-        Location end = new Location(locs[1],"1",eOb);
-        nL.addLocation(start);
-        nL.addLocation(end);
-
-        for(int i = 2; i < locs.length;i++)
+        Routes nR = new Routes();
+        if(!nR.getRoute(locs[0] + " to " + locs[1]).equals(null))
         {
-            nL.addLocation(new Location(locs[i],""+i,new GPSObject(locs[i])));
+            return gson.toJson(nR.getRoute(locs[0] + " to " + locs[1]));
         }
+        else {
 
-        return gson.toJson(new Route(locs[0]+ " to " + locs[1],calculateRoute(nL)));
+            //Build route
+            Locations nL = new Locations();
+            GPSObject sOb = new GPSObject(locs[0]);
+            Location start = new Location(locs[0], "0", sOb);
+            GPSObject eOb = new GPSObject(locs[1]);
+            Location end = new Location(locs[1], "1", eOb);
+            nL.addLocation(start);
+            nL.addLocation(end);
+
+            for (int i = 2; i < locs.length; i++) {
+                nL.addLocation(new Location(locs[i], "" + i, new GPSObject(locs[i])));
+            }
+
+            return gson.toJson(new Route(locs[0] + " to " + locs[1], calculateRoute(nL)));
+        }
     }
 
 

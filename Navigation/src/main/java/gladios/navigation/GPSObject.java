@@ -22,6 +22,7 @@ public class GPSObject {
         this.requestGIS(n);
     }
 
+
     /**
      * Get's coordinates of location.
      * @param n Name of the location
@@ -43,7 +44,12 @@ public class GPSObject {
             return true;
         }
     }
-    private void set(float[] ob)
+
+    /**
+     * Set public for debug purposes
+     * @param ob Coordinates used for location
+     */
+    public void set(float[] ob)
     {
         this.longitude = ob[1];
         this.latitude = ob[0];
