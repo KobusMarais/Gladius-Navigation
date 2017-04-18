@@ -1,10 +1,11 @@
-//Created by Jacobus Marais 15188397 21/03/2017
 package gladios.navigation;
 
 import java.util.ArrayList;
 
 public class Locations
 {
+	//Will hold the start and end Location's of a Route
+	//Insertion order matters, add start then end Location.
 	public ArrayList<Location> listOfLocations;
 
 	public Locations()
@@ -126,11 +127,27 @@ public class Locations
 	{
 		return listOfLocations.get(index);
 	}
+
 	public int size()
 	{
-
-			return listOfLocations.size();
-
+		return listOfLocations.size();
 	}
 
+	/**
+	 *
+	 * @return A Location object encapsulating the start of a specific Route
+	 */
+	public Location getStartLocation()
+	{
+		return this.listOfLocations.get(0);
+	}
+
+	/**
+	 *
+	 * @return A Location object encapsulating the destination of a specific Route
+	 */
+	public Location getEndLocation()
+	{
+		return this.listOfLocations.get(1);
+	}
 }

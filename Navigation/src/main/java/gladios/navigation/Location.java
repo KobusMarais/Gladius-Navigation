@@ -1,4 +1,3 @@
-
 package gladios.navigation;
 /**
  * Created by darrenadams on 2017/03/21.
@@ -33,5 +32,20 @@ public class Location {
     {
         float[] longlat = coordinates.getLongLatCoords();
         return longlat[0] + "," + longlat[1];
+    }
+
+    public String getName()
+    {
+        return this.name;
+    }
+
+    public String getLocationID()
+    {
+        return locationID;
+    }
+
+    public GPSObject getCoordinates()
+    {
+        return coordinates;
     }
 }
