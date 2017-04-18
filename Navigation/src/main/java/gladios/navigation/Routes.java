@@ -9,10 +9,10 @@ import java.util.*;
 
 public class Routes
 {
-	/**
-	 *	This ArrayList of Route Objects holds
-	 *	Route's contained in the database.
-	 */
+	
+	//This HashMap of Route Objects holds Route's contained in the database.
+	//Advantage: Safe and fast direct-access, no search required.
+	//Key = RouteName, Value = Route Object.
 	private HashMap<String,Route> routes;
 	private GIS gis = new GIS();
 
