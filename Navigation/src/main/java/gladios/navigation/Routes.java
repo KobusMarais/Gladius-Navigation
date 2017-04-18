@@ -1,5 +1,10 @@
 package gladios.navigation;
 import javax.management.relation.RoleInfo;
+
+import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.*;
 
 public class Routes
@@ -8,11 +13,18 @@ public class Routes
 	 *	This ArrayList of Route Objects holds
 	 *	Route's contained in the database.
 	 */
-	private ArrayList<Route> routes;
+	private HashMap<String,Route> routes;
+	private GIS gis = new GIS();
+
+	//Modify to specification of final DB/server information...
+	final private String url = "jdbc:mysql://localhost/Navigation";
+	final private String user = "root";
+	final private String driver = "com.mysql.jdbc.Driver";//Do not change
+	final private String pass = "*********";
 	
 	public Routes()
 		{
-				routes = new ArrayList<Route>();
+				routes = new HashMap<String, Route>();
 		}
 
 	/**
@@ -22,31 +34,123 @@ public class Routes
 	 * @param roo Route to be inserted into the DB.
 	 * @return true if the Route was successfully added, else false.
 	 */
-	public Boolean addRoute(Route roo)
+	public Route addRoute(Route roo)
 	{
-		routes.add(roo);
-				
-		//Formulate sql query that maps Route Object to DB
-		String query = "INSERT INTO Routes .....VALUES(...)";
-				
-		//Connect to the DB
-		Boolean connectionMadeSuccessfully = true;
-				
-		//If connection is made
-		if(connectionMadeSuccessfully)
+		if(roo != null)
 		{
-			//Execute the sql query
-			System.out.println("Querying the DB ...");
-			System.out.println("Route added successfully!\n");
-			return true;
+			routes.put(roo.getName(), roo);
+
+			Connection connect = null;
+			Statement statement = null;
+
+			try
+			{
+				Class.forName("com.mysql.jdbc.Driver");
+				connect = DriverManager.getConnection(url, user, pass);
+				connect.setAutoCommit(false);
+
+				if(connect != null)
+				{
+					System.out.println("Connection to DB Successful!");
+				}
+				else
+				{
+					System.out.println("CONNECTION TO DB FAILED!");
+					//return false;
+				}
+
+				String start = roo.getLocations().getStartLocation().getName();
+				String locIDStart = roo.getLocations().getStartLocation().getLocationID();
+
+				String end = roo.getLocations().getEndLocation().getName();
+				String locIDEnd = roo.getLocations().getEndLocation().getLocationID();
+
+				float[] startCoords = roo.getLocations().getStartLocation().getCoordinates().getLongLatCoords();
+				float[] endCoords = roo.getLocations().getEndLocation().getCoordinates().getLongLatCoords();
+
+				statement = connect.createStatement();
+
+				String query = "INSERT INTO Routes(RouteName,StartLocationName,EndLocationName)" + "VALUES('"+roo.getName()+"','"+start+"','"+end+"');";
+				statement.executeUpdate(query);
+
+				query = "INSERT INTO Location(LocationName, LocationID, Longitude, Latitude)" + "VALUES('"+start+"','"+locIDStart+"','"+startCoords[0]+"','"+startCoords[1]+"');";
+				statement.executeUpdate(query);
+				query = "INSERT INTO Location(LocationName, LocationID, Longitude, Latitude)" + "VALUES('"+end+"','"+locIDEnd+"','"+endCoords[0]+"','"+endCoords[1]+"');";
+				statement.executeUpdate(query);
+
+				Location[] environment = gis.locationsWithinRadius(startCoords[0], startCoords[1], getDistance(startCoords, endCoords));
+				LinkedList<Location> wayPoints = computePath(environment);
+
+				int pass = 0;
+
+				//Fully initialize (addition of its way-points) the Route in the local structure (HashMap)
+				while(pass < wayPoints.size())
+				{
+					routes.get(roo.getName()).getLocations().listOfLocations.add(wayPoints.get(pass));
+					pass++;
+				}
+
+				int track = 0;	Location curr;
+
+				//Add way-points to collection of Location's in DB (avoiding duplicate Location's)
+				while(track < wayPoints.size())
+				{
+					curr = wayPoints.get(track);
+					query = "INSERT INTO Location(LocationName, LocationID, Longitude, Latitude)" + "VALUES('"+curr.getName()+"','"+curr.getLocationID()+"','"+curr.getCoordinates().getLongitude()+"','"+curr.getCoordinates().getLatitude()+"');";
+					statement.executeUpdate(query);
+
+					track++;
+				}
+
+				query = "INSERT INTO RouteWayPoints(RouteName, StartLoc, EndLoc)" + "VALUES('"+roo.getName()+"','"+start+"','"+end+"');";
+
+				int count = 0;
+
+				//Update Route with the now computed wayPoints
+				while(count < wayPoints.size())
+				{
+					query = "UPDATE RouteWayPoints set WayPoint"+(count + 1)+" = '"+wayPoints.get(count).getName()+"' WHERE RouteName = '"+start+"';";
+					statement.executeUpdate(query);
+
+					count++;
+				}
+
+				statement.close();
+				connect.commit();
+				connect.close();
+			}
+			catch (Exception exp)
+			{
+				System.err.println(exp.getClass().getName() + ": " + exp.getMessage());
+				System.exit(0);
+			}
+
+			return routes.get(roo.getName());
 		}
-		else//Failed to connect to DB
-		{
-			System.out.println("Connection to Database failed!\n");
-			return false;
-		}
+
+		return null;
 	}
 
+	private LinkedList<Location> computePath(Location[] enviro)
+	{
+		LinkedList<Location> path = new LinkedList<>();
+
+		//Actual Route building happens in here..
+
+		return path;
+	}
+
+	/**
+	 * Computes the direct (point-to-point) distance between a start and end Location, independent of the waypoints.
+	 *
+	 * @param startCoords Longitude and latitude of the starting point (X and Y coordinates).
+	 * @param endCoords	Longitude and latitude of the ending point (X and Y coordinates).
+	 * @return	The point-to-point distance between a start and end Location.
+	 */
+	private float getDistance(float[] startCoords, float[] endCoords)
+	{
+		return (float) (Math.sqrt(Math.pow((startCoords[0]-endCoords[0]), 2) + Math.pow((startCoords[1]-endCoords[1]), 2)));
+	}
 
 	/**
 	 * This method removes a given Route from the database of Routes
@@ -57,39 +161,11 @@ public class Routes
 	 */
 	public Boolean removeRoute(Route roo)
 	{
-		Boolean routeContainedInDB = true;
-			
-		if(routeContainedInDB)
+		/*if(roo != null)
 		{
-			//Remove Route from ArrayList
-			routes.remove(roo);
-				
-			//Formulate sql query to delete the specified Route from the DB
-			//using the Route' name attribute as a Primary-Key
-			String query = "DELETE FROM Routes ..... WHERE name = roo.name";
-				
-			//Connect to the DB
-			Boolean connectionMadeSuccessfully = true;
-				
-			//If connection is made
-			if(connectionMadeSuccessfully)
-			{
-				//Execute the sql query
-				System.out.println("Querying the DB ...");
-				System.out.println("Route removed successfully!\n");
-				return true;
-			}
-			else//Failed to connect to DB
-			{
-				System.out.println("Connection to Database failed!");
-				return false;
-			}
-		}
-		else
-		{
-			System.out.println("Route is not contained in the DB.\n");
-		}
-	
+
+		}*/
+
 		return false;
 	}
 
@@ -103,36 +179,19 @@ public class Routes
 	 */
 	public Route getRoute(String routeName)
 	{
-		if(search(routeName) == null)
+		//Beauty of the HashMap, Direct-Access
+		Route la = routes.get(routeName);
+
+		if(la == null)
 		{
-			//If Route is not contained, add the Route to the DB.
-			routes.add(new Route(routeName));
+			//If Route is not contained, add the Route to the DB & HashMap.
+			routes.put(routeName, new Route(routeName));
+			la = this.addRoute(new Route(routeName));
 		}
-		else
-		{
-			return search(routeName);
-		}
-		return null;
+
+		return la;
 	}
-					
-	public Route search(String target)
-	{
-		int count = 0;
-					
-		while(count < routes.size())
-		{
-			if(routes.get(count).getName() == target)
-			{
-				System.out.println("Route found!\n");
-				return routes.get(count);
-			}
-					
-			count++;
-		}
-				
-		System.out.println("Route not contained in DB\n");
-		return null;
-	}
+
 
 	/**
 	 * 	This function returns a List of Routes with the same starting and ending Locations.
@@ -148,59 +207,25 @@ public class Routes
 	 */
 	public ArrayList<Route> getRoutes(Locations loc)
 	{
-		Boolean locationObjectsAreValid = true;
-			
-		if(locationObjectsAreValid)
+		/*if(loc != null)
 		{
-			//Formulate sql query to extract Routes from the DB with the specified start and end Location.
-			String query = "SELECT FROM Routes ..... WHERE ..";
-					
-			//Connect to the DB
-			Boolean connectionMadeSuccessfully = true;
-				
-			//If connection is made
-			if(connectionMadeSuccessfully)
-			{
-				//Execute the sql query
-				System.out.println("Querying the DB ...");
-				System.out.println("Retrieving Routes!\n");
-							
-				//Add returned Routes to a List of Routes
-				ArrayList<Route> possibleRoutes = new ArrayList<Route>();
-				Boolean addingRoutes = true;
-								
-				while(addingRoutes)
-				{
-					possibleRoutes.add(new Route(/*Initialize with data extracted from DB*/));
-					addingRoutes = false;
-				}
-							
-				return possibleRoutes;
-			}
-			else//Failed to connect to DB
-			{
-				System.out.println("Connection to Database failed!");
-				return null;
-			}
-		}
-		else
-		{
-			System.out.println("Locations are invalid.\n");
-		}
-			
+			ArrayList<Route> list = new ArrayList<>();
+
+
+		}*/
+
 		return null;
 	}
 
-
 	/**
-	 * This function returns a Route based on a given user preference.
+	 * This function returns a Route based on a GIVEN user preference.
 	 *
 	 * @param loc Locations object encapsulating the start and end Locations.
 	 * @return a Locations object encapsulating the possible Route's that can be taken to reach the destination.
 	 */
 	public Locations getPreferedRoute(Locations loc)
 	{
-		String preferenceA = "simplestRoute";
+		/*String preferenceA = "simplestRoute";
 		String preferenceB = "shortestRoute";
 			
 		Boolean locationObjectsAreValid = true;
@@ -226,7 +251,7 @@ public class Routes
 				System.out.println("Returning Shortest-Route.");
 				return loc;
 			}
-		}
+		}*/
 			
 		return null;
 	}
@@ -237,18 +262,7 @@ public class Routes
 		*/
 		public Boolean savePreference(String pref)
 		{
-			boolean connectionWasMade = true;
-
-			if(connectionWasMade){
-				System.out.println("Preferences are saved");
-				return true;
-
-			}else{
-				System.out.println("Preferences were not saved");
-				return true;
-
-			}
-				
+			return true;
 		}
 
 		/**
@@ -259,6 +273,6 @@ public class Routes
 		 */
 		public Route modifyRoute(Route currRoute)
 		{
-			return new Route("Modified",currRoute);
+			return null;
 		}
 }

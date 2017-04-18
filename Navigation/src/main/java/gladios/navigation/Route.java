@@ -6,11 +6,6 @@ public class Route
 	private String name;
 	private Locations path;
 
-	public Route(String V, Route M)
-	{
-
-	}
-
 	public Route()
 	{
 		name = "";
@@ -29,17 +24,16 @@ public class Route
 		path = new Locations();
 		path = clone;
 	}
-
-	public Route(Route rt)
-	{
-		this.name = rt.name;
-		this.path = rt.path;
-	}
 	
 	public String getName()
 		{
 				return name;	
 		}
+
+	public Locations getLocations()
+	{
+		return this.path;
+	}
 
 	/**
 	 *	This method
@@ -49,7 +43,7 @@ public class Route
 	 */
 	public Locations calculateRoute(Locations routeArray)
 	{
-		Boolean locationObjectsAreValid = true;
+		/*Boolean locationObjectsAreValid = true;
 		
 		if(locationObjectsAreValid)
 		{
@@ -69,13 +63,8 @@ public class Route
 		else
 		{
 			System.out.println("Location Objects are invalid.\n");
-		}
+		}*/
 				
 		return null;
 	}
-
-	public Locations getLocations()
-		{
-			return this.path;
-		}
 }
