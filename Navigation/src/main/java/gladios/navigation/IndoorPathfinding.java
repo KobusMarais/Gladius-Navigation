@@ -14,6 +14,8 @@
 	--> We need to check the format of the String name of start and end locations ASAP
 	--> We need to decide on a String format for staircases 
 	--> We need to use the same JSON plugin to create and parse JSON in Java
+	
+	NB ANY 0,0 COORDINATES WITHIN A ROUTE MEANS STAIRS NEED TO BE TAKEN
 */
 
 public class IndoorPathfinding  {
@@ -105,6 +107,8 @@ public class IndoorPathfinding  {
 			as necessary.
 
 			Function will be called if arePointsOnTheSamePlane returns false
+			
+			will add 0,0 coordinates
 		*/
 	}
 }
