@@ -25,6 +25,9 @@ public class IndoorPathfinding  {
 
 	protected GISInterface GISObject; //we will receive all GIS information from this singular GIS object
 
+	public IndoorPathfinding() {
+		GISObject = new GISInterface();
+	}
 	/** The following four functions are helper functions to the pathfinding algorithm 
 		->	distanceBetweenTwoPoints
 		-> 	arePointsOnSamePlane
@@ -80,27 +83,67 @@ public class IndoorPathfinding  {
 
 	/* NB NB NB NB NB NB*/
 
-	public JSONString createDefaultRoute(float prevx, float prevy, float currx, float curry, float destx, float desty, JSONString route) {
-		/* 	Okay so this is a recursive function, this will be called from our class interface.
-				
-			-->	it repeatedly calls itself until currentPoint is equal to finalDestination or less
-				than 4 meters away from finalDestination (because then you should be able to physically see the location)
+	public ArrayList<ArrayList<Float>> createDefaultRoute(float prevx, float prevy, float currx, float curry, float destx, float desty, ArrayList<ArrayList<Float>> route) {
+		if(distanceBetweenTwoPoints(currx,curry,destx,desty) <= 4) {
+			ArrayList<Float> temp = new ArrayList<Float>(0);
+			temp.add(destx);
+			temp.add(desty);
+			route.add(temp);
+			return route;
+		} else {
 			
-			--> At the VERY BEGINNING of this function we call arePointsOnTheSamePlane, if they are on the same level we continue normally as explained
-				below, but if they aren't we will call addStaircase() and then "jump" the user to the correct level of the building and continue 
-				from the currentPoint. (We can do this because x and y will be the same regardless of z axis BUT we will need to check isPointInvalid)
+			if(route.size() == 0) {
+				if(arePointsOnSamePlane(GISObject.getLocation(currx,curry),GISObject.getLocation(destx,desty)) == false) {
+					route = addStaircase(route);
+				}
+				ArrayList<Float> beginning = new ArrayList<Float>(0);
+				beginning.add(currx);
+				beginning.add(curry);
+				route.add(beginning);
+			}
 
-			-->	If currentPoint isn't the final case THEN distanceBetweenTwoPoints from the helperObject will be called on all coordinates 
-				in a 4 meter radius from the currentPoint, the coordinate in that radius that returns the smallest value is added to the route
-				and we call createDefaultRoute on that new coordinate.
+			float [] xPoints = {currx-4,currx-(float)3.5,currx-3,currx-(float)2.5,currx-2,currx-(float)1.5,currx-1,currx-(float)0.5,currx,currx+(float)0.5,currx+1,currx+(float)1.5,currx+2,currx+(float)2.5,currx+3,currx+(float)3.5,currx+4};
+			float [] positiveYPoints = {curry,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,curry};
+			float [] negativeYPoints = {curry,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,curry};
+			int i;
 
-			-->	However before that new point is added we call isPointInvalid on it, if it is invalid, we take the next coordinate within radius of 
-				prevPoint that has the second smallest distance between it and finalDestination
-		
-		*/
+			for(i = 1; i < 16; i++) {
+				positiveYPoints[i] = (float)Math.sqrt(Math.pow(4,2) - Math.pow((double)xPoints[i],2));
+				negativeYPoints[i] = -1 * ( (float)Math.sqrt(Math.pow(4,2) - Math.pow((double)xPoints[i],2)) );
+			}
+
+			float smallestDistance = Integer.MAX_VALUE;
+			float smallestx = Integer.MAX_VALUE;
+			float smallesty = Integer.MAX_VALUE; 
+
+			for(i = 0; i < 17; i++) {
+				if(distanceBetweenTwoPoints(xPoints[i],positiveYPoints[i],destx,desty) < smallestDistance) {
+					if(isPointInvalid(xPoints[i],positiveYPoints[i]) == false) {
+						smallestDistance = distanceBetweenTwoPoints(xPoints[i],positiveYPoints[i],destx,desty);
+						smallestx = xPoints[i];
+						smallesty = positiveYPoints[i];
+					}
+				}
+				if(distanceBetweenTwoPoints(xPoints[i],negativeYPoints[i],destx,desty) < smallestDistance) {
+					if(isPointInvalid(xPoints[i],negativeYPoints[i]) == false) {
+						smallestDistance = distanceBetweenTwoPoints(xPoints[i],negativeYPoints[i],destx,desty);
+						smallestx = xPoints[i];
+						smallesty = negativeYPoints[i];
+					}
+				}
+			}
+
+			ArrayList<Float> temp = new ArrayList<Float>(0);
+			temp.add(smallestx);
+			temp.add(smallesty);
+			route.add(temp);
+
+			return createDefaultRoute(currx,curry,smallestx,smallesty,destx,desty,route);
+
+		}
 	}
 
-	public JSONString addStaircase(JSONString route) {
+	public ArrayList<Float> addStaircase() {
 		/*
 			Used to add a sentence or enumerator to the route string if the start and destination location are on different levels.
 			This will eventually lead to the user being told that they need to find the nearest staircase and go up as many levels 
