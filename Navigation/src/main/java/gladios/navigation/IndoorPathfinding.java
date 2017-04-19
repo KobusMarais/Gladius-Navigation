@@ -17,10 +17,13 @@
 	
 	NB ANY 0,0 COORDINATES WITHIN A ROUTE MEANS STAIRS NEED TO BE TAKEN
 */
+import com.gladius.GIS;
+import java.lang.Math;
+import java.util.ArrayList;
 
 public class IndoorPathfinding  {
 
-	protected GISModule GISObject; //we will receive all GIS information from this singular GIS object
+	protected GISInterface GISObject; //we will receive all GIS information from this singular GIS object
 
 	/** The following four functions are helper functions to the pathfinding algorithm 
 		->	distanceBetweenTwoPoints
