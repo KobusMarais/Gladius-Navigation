@@ -13,6 +13,7 @@
 
 	--> We need to check the format of the String name of start and end locations ASAP
 	--> We need to decide on a String format for staircases 
+	--> We need to use the same JSON plugin to create and parse JSON in Java
 */
 
 public class IndoorPathfinding  {
@@ -81,14 +82,14 @@ public class IndoorPathfinding  {
 		/* 	Okay so this is a recursive function, this will be called from our class interface.
 				
 			-->	it repeatedly calls itself until currentPoint is equal to finalDestination or less
-				than 3 meters away from finalDestination (because then you should be able to physically see the location)
+				than 4 meters away from finalDestination (because then you should be able to physically see the location)
 			
 			--> At the VERY BEGINNING of this function we call arePointsOnTheSamePlane, if they are on the same level we continue normally as explained
 				below, but if they aren't we will call addStaircase() and then "jump" the user to the correct level of the building and continue 
 				from the currentPoint. (We can do this because x and y will be the same regardless of z axis BUT we will need to check isPointInvalid)
 
 			-->	If currentPoint isn't the final case THEN distanceBetweenTwoPoints from the helperObject will be called on all coordinates 
-				in a 3 meter radius from the currentPoint, the coordinate in that radius that returns the smallest value is added to the route
+				in a 4 meter radius from the currentPoint, the coordinate in that radius that returns the smallest value is added to the route
 				and we call createDefaultRoute on that new coordinate.
 
 			-->	However before that new point is added we call isPointInvalid on it, if it is invalid, we take the next coordinate within radius of 
