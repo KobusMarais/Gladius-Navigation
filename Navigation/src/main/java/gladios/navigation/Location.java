@@ -43,4 +43,11 @@ public class Location {
     {
         return coordinates.getLongLatCoords();
     }
+
+    public String getName()
+    {
+        return this.name;
+    }
+
+
 }

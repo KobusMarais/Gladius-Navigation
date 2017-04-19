@@ -1,6 +1,8 @@
 package gladios.navigation;
 import gladios.gis.*;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by DJ Adams.
@@ -18,9 +20,90 @@ public class outdoorPathfinding {
     public Locations findOutdoor(Locations loc)
         {
 
+            //We will be receiving a list of locations to find our way around
+
+
+            //We need to find a radius of locations from start to end.
+
+
+            //Holds a list of applicable locations
+            ArrayList<String> stubs = new ArrayList<String>();
+
+            //===========================Finding the path towards the end position.
+
+            GISInterface gis = GIS.getInstance();
+            String current = loc.get(0).getName();
+            float[] fl = loc.get(0).retrieveCoordinatesFloat();
+            float[] end = loc.get(1).retrieveCoordinatesFloat();
+            String[] radiusLoc = gis.locationsWithinRadius(fl[0],fl[1],0);
+
+            stubs.add(current);
+
+            for(int i = 0; i < radiusLoc.length;i++)
+            {
+                stubs.add(radiusLoc[i]);
+            }
+
+            //Find the lowest distance to go to next waypoint
+            current = getNext(end,radiusLoc,gis);
+            while(current != loc.get(1).getName()) {
+
+                float[] locFl = gis.getCoordinates(current);
+                radiusLoc = gis.locationsWithinRadius(locFl[0],locFl[1],0);
+                for(int j = 0; j < radiusLoc.length;j++)
+                {
+                    stubs.add(radiusLoc[j]);
+                }
+                current = getNext(end,radiusLoc,gis);
+
+            }
+
+            //===========================
+
+            //Find waypoints=============
+
+
+
+
+            //===========================
+
+
+
 
             return null;
         }
+
+    /**
+     *
+     * @param loc Array of locations within radius
+     * @return shortest distanced location
+     */
+    private String getNext(float[] end,String[] loc ,GISInterface gis)
+    {
+        double lowest = 0;
+        String lowestLocation = "";
+        for(int i = 0; i < loc.length;i++)
+        {
+            float[] fl = gis.getCoordinates(loc[i]);
+            if(lowest == 0)
+            {
+
+                lowest = distanceBetween(end[0],end[1],fl[0],fl[1]);
+                lowestLocation = loc[i];
+            }
+            else
+            {
+                if(distanceBetween(end[0],end[1],fl[0],fl[1]) < lowest)
+                {
+                    lowest = distanceBetween(end[0],end[1],fl[0],fl[1]);
+                    lowestLocation = loc[i];
+                }
+            }
+        }
+
+        return lowestLocation;
+    }
+
 
     /**
      * This method works out the distance between 2 lon/lat combinations
