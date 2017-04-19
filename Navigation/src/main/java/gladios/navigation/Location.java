@@ -27,11 +27,20 @@ public class Location {
 
     /**
      *
-     * @return Co-ordinates from location
+     * @return Co-ordinates from location in string format
      */
-    public String retrieveCoordinates()
+    public String retrieveCoordinatesString()
     {
         float[] longlat = coordinates.getLongLatCoords();
         return longlat[0] + "," + longlat[1];
+    }
+
+    /**
+     *
+     * @return Co-ordinates from location in float format
+     */
+    public float[] retrieveCoordinatesFloat()
+    {
+        return coordinates.getLongLatCoords();
     }
 }
