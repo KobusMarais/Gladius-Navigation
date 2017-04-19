@@ -30,11 +30,8 @@ public class IndoorPathfinding  {
 	*/
 
 	public float distanceBetweenTwoPoints(float ax, float ay, float bx, float by) {
-		/*
-			Simply returns the difference between two float values.
-			return a - b;
-		*/
-
+		
+		return (float)Math.sqrt(Math.pow((double)(bx-ax),2) + Math.pow((double)(by-ay),2));
 	}
 
 	public boolean arePointsOnSamePlane(String start, String dest) {
@@ -110,5 +107,9 @@ public class IndoorPathfinding  {
 			
 			will add 0,0 coordinates
 		*/
+		ArrayList<Float> temp = new ArrayList<Float>(0);
+		temp.add((float)0.0);
+		temp.add((float)0.0);
+		return temp;
 	}
 }
