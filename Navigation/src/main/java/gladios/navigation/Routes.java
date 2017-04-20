@@ -59,7 +59,7 @@ public class Routes
 				else
 				{
 					System.out.println("CONNECTION TO DB FAILED!");
-					//return false;
+					System.exit(0);
 				}
 
 				String start = roo.getLocations().getStartLocation().getName();
@@ -190,17 +190,8 @@ public class Routes
 					System.out.println("Connection to DB Successful!");
 				} else {
 					System.out.println("CONNECTION TO DB FAILED!");
-					//return false;
+					//System.exit(0);
 				}
-
-			//	String start = roo.getLocations().getStartLocation().getName();
-			//	String locIDStart = roo.getLocations().getStartLocation().getLocationID();
-
-			//	String end = roo.getLocations().getEndLocation().getName();
-			//	String locIDEnd = roo.getLocations().getEndLocation().getLocationID();
-
-			//	float[] startCoords = roo.getLocations().getStartLocation().getCoordinates().getLongLatCoords();
-			//	float[] endCoords = roo.getLocations().getEndLocation().getCoordinates().getLongLatCoords();
 
 				statement = connect.createStatement();
 				String query = "DELETE FROM Routes WHERE RouteName = '"+roo.getName()+"';";
@@ -209,6 +200,8 @@ public class Routes
 				statement.close();
 				connect.commit();
 				connect.close();
+				return true;
+				
 			} catch (Exception exp) {
 				System.err.println(exp.getClass().getName() + ": " + exp.getMessage());
 				System.exit(0);
