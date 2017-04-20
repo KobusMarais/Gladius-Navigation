@@ -25,6 +25,14 @@
             <version>2.6.2</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
     </dependencies>
+
 
 </project>

@@ -1,7 +1,14 @@
 package gladios.navigation;
+import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
 import gladios.gis.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleWeightedGraph;
+
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
 
 
 /**
@@ -46,10 +53,12 @@ public class outdoorPathfinding {
 
             //Find the lowest distance to go to next waypoint
             current = getNext(end,radiusLoc,gis);
-            while(current != loc.get(1).getName()) {
+            int tick = 0;
+            while(current != loc.get(1).getName() && tick  < 2000) {
 
                 float[] locFl = gis.getCoordinates(current);
                 radiusLoc = gis.locationsWithinRadius(locFl[0],locFl[1],0);
+                tick++;
                 for(int j = 0; j < radiusLoc.length;j++)
                 {
                     stubs.add(radiusLoc[j]);
@@ -58,20 +67,78 @@ public class outdoorPathfinding {
 
             }
 
+
+
             //===========================
 
             //Find waypoints=============
+            ArrayList<String> needToAdd = new ArrayList<String>();
+            int needed = loc.size()-2;
+
+            for(int k = 2; k < stubs.size();k++)
+            {
+                if(stubs.contains(loc.get(k).getName()))
+                {
+                    needed--;
+                }
+                else
+                {
+                    needToAdd.add(stubs.get(stubs.indexOf(loc.get(k).getName())));
+                }
+            }
+
+            if(needed != 0)
+            {
+                //We need to add them to our stubs list
+                for(int l = 0; l < needToAdd.size();l++)
+                {
+                    stubs.add(needToAdd.get(l));
+                }
+            }
 
 
 
+            //End location
+            stubs.add(loc.get(1).getName());
 
             //===========================
-
-
+            String result = getShortestPath(stubs);
 
 
             return null;
         }
+
+    private String getShortestPath(ArrayList<String> stubs)
+    {
+        //We now construct the graph, and add all locations to one another, calculating their distances between
+        WeightedGraph<String,DefaultWeightedEdge> graph = new SimpleWeightedGraph<String, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+
+        //Draw graph
+
+        //Add Vertex's
+        for(int i = 0; i < stubs.size();i++)
+        {
+            graph.addVertex(stubs.get(i));
+        }
+
+        /*for(int j = 0; j < stubs.size();j++)
+        {
+            for(int k = 0; k < stubs.size();k++)
+            {
+                float[] jCoord,kCoord;
+                GISInterface giss = GIS.getInstance();
+                jCoord = giss.getCoordinates(stubs.get(j));
+                kCoord = giss.getCoordinates(stubs.get(k));
+                graph.setEdgeWeight(stubs.get(j),stubs.get(k),distanceBetween(jCoord[0],jCoord[1],kCoord[0],kCoord[1]));
+            }
+        }*/
+
+        return "";
+
+
+
+
+    }
 
     /**
      *
