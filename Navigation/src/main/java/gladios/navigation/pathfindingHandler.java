@@ -60,11 +60,12 @@ public class pathfindingHandler {
 
             Locations finalRet = new Locations();
             finalRet.addLocation(outdoor.get(0));
-            for(int i = 0; i < 0; i++)
-            {
-                finalRet.addLocation(indoor.get(i));
-            }
             finalRet.addLocation(outdoor.get(outdoor.size()-1));
+            for(int i = 1; i < outdoor.size()-1; i++)
+            {
+                finalRet.addLocation(outdoor.get(i));
+            }
+
 
             return finalRet;
         }

@@ -35,6 +35,11 @@ public class IndoorPathfinding  {
 		->	heightDifference
 		->	isPointInvalid
 	*/
+	public Locations findIndoor(Locations loc)
+	{
+		return new Locations();
+	}
+
 
 	public float distanceBetweenTwoPoints(float ax, float ay, float bx, float by) {
 		

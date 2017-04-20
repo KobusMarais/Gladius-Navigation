@@ -32,7 +32,12 @@ public class outdoorPathfinding {
 
 
             //We need to find a radius of locations from start to end.
+            String[] arr = new String[loc.size()];
 
+            for(int i = 0; i < arr.length;i++)
+            {
+                arr[i] = loc.get(i).getName();
+            }
 
             //Holds a list of applicable locations
             ArrayList<String> stubs = new ArrayList<String>();
@@ -106,11 +111,8 @@ public class outdoorPathfinding {
             String[] result;
             if(debug)
             {
-                result = new String[stubs.size()];
-                for(int i = 0; i < stubs.size();i++)
-                {
-                    result[i] = stubs.get(i);
-                }
+                result = arr;
+
             }
             else
             {
@@ -170,6 +172,7 @@ public class outdoorPathfinding {
         GraphPath p = a.getPath(begin,end);
 
         String splitt = p.getVertexList().toString();
+        System.out.println(splitt);
         return splitt.split(",");
 
 
@@ -188,6 +191,11 @@ public class outdoorPathfinding {
 
     }
 
+    /**
+     *
+     * @param locs string of locations to compile into correct datatype
+     * @return Locations - Correct datatype
+     */
     private Locations compile(String[] locs)
     {
         Locations ret = new Locations();
