@@ -54,7 +54,24 @@ public class pathfindingHandler {
      */
     public Locations compile(Future<Locations> ind,Future<Locations> out)
     {
-        //TODO provide compilation format used and return to parent function
+        try {
+            Locations indoor = ind.get();
+            Locations outdoor = out.get();
+
+            Locations finalRet = new Locations();
+            finalRet.addLocation(outdoor.get(0));
+            for(int i = 0; i < 0; i++)
+            {
+                finalRet.addLocation(indoor.get(i));
+            }
+            finalRet.addLocation(outdoor.get(outdoor.size()-1));
+
+            return finalRet;
+        }
+        catch (Exception err)
+        {
+
+        }
         return null;
     }
 

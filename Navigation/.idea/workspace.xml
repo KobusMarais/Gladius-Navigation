@@ -54,7 +54,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="outdoorPathfinding.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="outdoorPathfinding.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/gladios/navigation/outdoorPathfinding.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="287">
@@ -99,7 +99,7 @@
       <file leaf-file-name="IndoorPathfinding.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/gladios/navigation/IndoorPathfinding.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-147">
+            <state relative-caret-position="855">
               <caret line="57" column="13" lean-forward="true" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
               <folding>
                 <element signature="e#0#6504#0" expanded="true" />
@@ -109,16 +109,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pathfindingHandler.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="pathfindingHandler.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/gladios/navigation/pathfindingHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="55">
-              <caret line="56" column="76" lean-forward="false" selection-start-line="56" selection-start-column="76" selection-end-line="56" selection-end-column="76" />
+            <state relative-caret-position="124">
+              <caret line="68" column="28" lean-forward="true" selection-start-line="68" selection-start-column="28" selection-end-line="68" selection-end-column="28" />
               <folding>
-                <element signature="e#1738#1739#0" expanded="true" />
-                <element signature="e#1764#1765#0" expanded="true" />
-                <element signature="e#1794#1795#0" expanded="true" />
-                <element signature="e#1856#1857#0" expanded="true" />
+                <element signature="e#2137#2138#0" expanded="true" />
+                <element signature="e#2163#2164#0" expanded="true" />
+                <element signature="e#2193#2194#0" expanded="true" />
+                <element signature="e#2255#2256#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -223,8 +223,8 @@
         <option value="$PROJECT_DIR$/src/main/java/gladios/navigation/Routes.java" />
         <option value="$PROJECT_DIR$/src/main/java/gladios/navigation/IndoorPathfinding.java" />
         <option value="$PROJECT_DIR$/src/main/java/gladios/navigation/NavigationIHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/gladios/navigation/pathfindingHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/gladios/navigation/outdoorPathfinding.java" />
+        <option value="$PROJECT_DIR$/src/main/java/gladios/navigation/pathfindingHandler.java" />
       </list>
     </option>
   </component>
@@ -1028,7 +1028,7 @@
       <workItem from="1492587411346" duration="4978000" />
       <workItem from="1492606266857" duration="5828000" />
       <workItem from="1492668248158" duration="5557000" />
-      <workItem from="1492688021780" duration="4140000" />
+      <workItem from="1492688021780" duration="4641000" />
     </task>
     <servers />
   </component>
@@ -1065,7 +1065,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71905000" />
+    <option name="totallyTimeSpent" value="72406000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
@@ -1302,30 +1302,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gladios/navigation/IndoorPathfinding.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-147">
-          <caret line="57" column="13" lean-forward="true" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#6504#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/gladios/navigation/pathfindingHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="56" column="76" lean-forward="false" selection-start-line="56" selection-start-column="76" selection-end-line="56" selection-end-column="76" />
-          <folding>
-            <element signature="e#1738#1739#0" expanded="true" />
-            <element signature="e#1764#1765#0" expanded="true" />
-            <element signature="e#1794#1795#0" expanded="true" />
-            <element signature="e#1856#1857#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gladios/navigation/outdoorPathfinding.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="287">
@@ -1342,6 +1318,30 @@
             <element signature="e#8492#8493#0" expanded="true" />
             <element signature="e#8527#8528#0" expanded="true" />
             <element signature="e#8554#8555#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gladios/navigation/IndoorPathfinding.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="57" column="13" lean-forward="true" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#6504#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gladios/navigation/pathfindingHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="68" column="28" lean-forward="true" selection-start-line="68" selection-start-column="28" selection-end-line="68" selection-end-column="28" />
+          <folding>
+            <element signature="e#2137#2138#0" expanded="true" />
+            <element signature="e#2163#2164#0" expanded="true" />
+            <element signature="e#2193#2194#0" expanded="true" />
+            <element signature="e#2255#2256#0" expanded="true" />
           </folding>
         </state>
       </provider>
