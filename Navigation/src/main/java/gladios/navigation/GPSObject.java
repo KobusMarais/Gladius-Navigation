@@ -1,5 +1,5 @@
 package gladios.navigation;
-import gladios.gis.*;
+//import gladios.gis.*;
 
 /**
  * Created by darrenadams on 2017/03/21.
@@ -18,7 +18,6 @@ public class GPSObject {
      */
     public GPSObject(String n)
     {
-
         this.requestGIS(n);
     }
 
@@ -67,5 +66,14 @@ public class GPSObject {
         return l;
     }
 
+    public float getLatitude()
+    {
+        return latitude;
+    }
+
+    public float getLongitude()
+    {
+        return longitude;
+    }
 }
 
