@@ -1,7 +1,7 @@
 import com.google.gson.*;
 import org.junit.jupiter.api.Test;
 
-import com.gladius.navup.navigation.*;
+import gladios.navigation.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**

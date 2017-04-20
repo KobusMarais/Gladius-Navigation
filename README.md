@@ -3,6 +3,9 @@
 ### Documentation
 [External Site : Javadocs](http://navigation.codingbench.co.za/)
 
+### This is the Outdoor Pathfinding component
+Our aim is described in the pdf found in this root directory.
+
 ### Members 
 * Darren Adams 
 * Mia Gerber 
