@@ -96,7 +96,7 @@ public class Routes
 
 				int pass = 0;
 
-				//Fully initialize (addition of its way-points) the Route in the local structure (HashMap)
+				//Fully initialize (addition of its way-points) the Route in the local structure (HashMap) -- Needs testing...
 				while(pass < wayPoints.size())
 				{
 					routes.get(roo.getName()).getLocations().listOfLocations.add(wayPoints.get(pass));
@@ -105,7 +105,7 @@ public class Routes
 
 				int track = 0;	Location curr;
 
-				//Add way-points to collection of Location's in DB (avoiding duplicate Location's)
+				//Add way-points to collection of Location's in DB (avoiding duplicate Location's) -- Needs testing...
 				while(track < wayPoints.size())
 				{
 					curr = wayPoints.get(track);
@@ -119,7 +119,7 @@ public class Routes
 
 				int count = 0;
 
-				//Update Route with the now computed wayPoints
+				//Update Route with the now computed wayPoints -- Needs testing...
 				while(count < wayPoints.size())
 				{
 					query = "UPDATE RouteWayPoints set WayPoint"+(count + 1)+" = '"+wayPoints.get(count).getName()+"' WHERE RouteName = '"+start+"';";
@@ -148,7 +148,7 @@ public class Routes
 	{
 		LinkedList<Location> path = new LinkedList<Location>();
 
-		//Actual Route building happens in here..
+		//Actual Route building happens in here.. GIS didnt pull through with locationsWithinRadius() method.
 
 		return path;
 	}
@@ -174,15 +174,9 @@ public class Routes
 	 */
 	public Boolean removeRoute(Route roo)
 	{
-		/*if(roo != null)
-		{
-
-		}*/
-
-
 		if(roo != null) {
 			//routes.put(roo.getName(), roo);
-			routes.remove(roo);
+			routes.remove(roo.getName());
 
 			Connection connect = null;
 			Statement statement = null;
@@ -209,7 +203,7 @@ public class Routes
 			//	float[] endCoords = roo.getLocations().getEndLocation().getCoordinates().getLongLatCoords();
 
 				statement = connect.createStatement();
-				String query = "DELETE FROM Routes WHERE RouteName = "+roo.getName();
+				String query = "DELETE FROM Routes WHERE RouteName = '"+roo.getName()"';";
 				statement.executeUpdate(query);
 
 				statement.close();
@@ -239,7 +233,6 @@ public class Routes
 		if(la == null)
 		{
 			//If Route is not contained, add the Route to the DB & HashMap.
-			routes.put(routeName, new Route(routeName));
 			la = this.addRoute(new Route(routeName));
 		}
 
