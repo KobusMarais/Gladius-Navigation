@@ -1,0 +1,32 @@
+#surefire
+#Thu Apr 20 20:57:40 SAST 2017
+testClassesDirectory=/Volumes/Darren_SD/2017 University/COS301/Phase 3/03\:04\:2017-Mini-Demo2/Gladius-Navigation/Navigation/target/test-classes
+classPathUrl.4=/Users/darrenadams/.m2/repository/org/opentest4j/opentest4j/1.0.0-M1/opentest4j-1.0.0-M1.jar
+classPathUrl.3=/Users/darrenadams/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.0.0-M3/junit-jupiter-api-5.0.0-M3.jar
+classPathUrl.2=/Users/darrenadams/.m2/repository/org/codeartisans/org.json/20161124/org.json-20161124.jar
+useManifestOnlyJar=true
+classPathUrl.1=/Volumes/Darren_SD/2017 University/COS301/Phase 3/03\:04\:2017-Mini-Demo2/Gladius-Navigation/Navigation/target/classes
+reportsDirectory=/Volumes/Darren_SD/2017 University/COS301/Phase 3/03\:04\:2017-Mini-Demo2/Gladius-Navigation/Navigation/target/surefire-reports
+classPathUrl.0=/Volumes/Darren_SD/2017 University/COS301/Phase 3/03\:04\:2017-Mini-Demo2/Gladius-Navigation/Navigation/target/test-classes
+providerConfiguration=org.apache.maven.surefire.junit.JUnit3Provider
+testSuiteDefinitionTestSourceDirectory=/Volumes/Darren_SD/2017 University/COS301/Phase 3/03\:04\:2017-Mini-Demo2/Gladius-Navigation/Navigation/src/test/java
+surefireClassPathUrl.1=/Users/darrenadams/.m2/repository/org/apache/maven/surefire/surefire-api/2.12.4/surefire-api-2.12.4.jar
+surefireClassPathUrl.0=/Users/darrenadams/.m2/repository/org/apache/maven/surefire/surefire-junit3/2.12.4/surefire-junit3-2.12.4.jar
+runOrder=filesystem
+useSystemClassLoader=true
+excludes0=**/*$*
+isTrimStackTrace=true
+tc.3=RouteTest
+tc.2=LocationsTest
+tc.1=NavigationIHandlerTest
+tc.0=RoutesTest
+includes2=**/*TestCase.java
+enableAssertions=true
+includes1=**/*Test.java
+failIfNoTests=false
+runStatisticsFile=/Volumes/Darren_SD/2017 University/COS301/Phase 3/03\:04\:2017-Mini-Demo2/Gladius-Navigation/Navigation/.surefire-AF07BA68B926F4288C8A6C9599DDE3316C9A4D89
+includes0=**/Test*.java
+classPathUrl.7=/Users/darrenadams/.m2/repository/org/jgrapht/jgrapht-core/1.0.1/jgrapht-core-1.0.1.jar
+childDelegation=false
+classPathUrl.6=/Users/darrenadams/.m2/repository/com/google/code/gson/gson/2.6.2/gson-2.6.2.jar
+classPathUrl.5=/Users/darrenadams/.m2/repository/org/junit/platform/junit-platform-commons/1.0.0-M3/junit-platform-commons-1.0.0-M3.jar
