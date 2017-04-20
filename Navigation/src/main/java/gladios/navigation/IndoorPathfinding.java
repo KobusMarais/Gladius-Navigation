@@ -17,16 +17,17 @@
 	
 	NB ANY 0,0 COORDINATES WITHIN A ROUTE MEANS STAIRS NEED TO BE TAKEN
 */
-import com.gladius.GIS;
+package gladios.navigation;
+import gladios.gis.*;
 import java.lang.Math;
 import java.util.ArrayList;
 
 public class IndoorPathfinding  {
 
-	protected GISInterface GISObject; //we will receive all GIS information from this singular GIS object
+
 
 	public IndoorPathfinding() {
-		GISObject = new GISInterface();
+
 	}
 	/** The following four functions are helper functions to the pathfinding algorithm 
 		->	distanceBetweenTwoPoints
@@ -85,14 +86,15 @@ public class IndoorPathfinding  {
 
 	public boolean isPointInvalid(float currx, float curry,float startx, float starty,float destx, float desty) 
 	{
+		GISInterface gis = GIS.getInstance();
 		/*
 			Checks if a given point makes a user walk through a wall or room or something equally ridiculous.
 
 			We will achieve this by checking if the coord is equal to an existing room that is NOT our start 
 			or end location, otherwise we assume we are still on track.
 		*/
-		String name = GISObject.getLocation(currx, curry);
-		if((name == GISObject.getLocation(startx, starty)) || (GISObject.getLocation(currx, curry) == GISObject.getLocation(destx, desty))) //checks if its the start or end location rooms
+		String name = gis.getLocation(currx, curry);
+		if((name == gis.getLocation(startx, starty)) || (gis.getLocation(currx, curry) == gis.getLocation(destx, desty))) //checks if its the start or end location rooms
 		{
 			return false;
 		}
@@ -128,6 +130,7 @@ public class IndoorPathfinding  {
 	/* NB NB NB NB NB NB*/
 
 	public ArrayList<ArrayList<Float>> createDefaultRoute(float prevx, float prevy, float currx, float curry, float destx, float desty, ArrayList<ArrayList<Float>> route) {
+		GISInterface gis = GIS.getInstance();
 		if(distanceBetweenTwoPoints(currx,curry,destx,desty) <= 4) {
 			ArrayList<Float> temp = new ArrayList<Float>(0);
 			temp.add(destx);
@@ -137,7 +140,7 @@ public class IndoorPathfinding  {
 		} else {
 			
 			if(route.size() == 0) {
-				if(arePointsOnSamePlane(GISObject.getLocation(currx,curry),GISObject.getLocation(destx,desty)) == false) {
+				if(arePointsOnSamePlane(gis.getLocation(currx,curry),gis.getLocation(destx,desty)) == false) {
 					route.add(addStaircase());
 				}
 				ArrayList<Float> beginning = new ArrayList<Float>(0);

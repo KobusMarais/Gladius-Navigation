@@ -1,4 +1,7 @@
 package gladios.navigation;
+import gladios.gis.GIS;
+import gladios.gis.GISInterface;
+
 import javax.management.relation.RoleInfo;
 
 import java.sql.*;
@@ -14,7 +17,7 @@ public class Routes
 	//Advantage: Safe and fast direct-access, no search required.
 	//Key = RouteName, Value = Route Object.
 	private HashMap<String,Route> routes;
-	private GIS gis = new GIS();
+
 
 	//Modify to specification of final DB/server information...
 	final private String url = "jdbc:mysql://localhost/Navigation";
@@ -42,7 +45,7 @@ public class Routes
 
 			Connection connect = null;
 			Statement statement = null;
-
+			GISInterface gis = GIS.getInstance();
 			try
 			{
 				Class.forName("com.mysql.jdbc.Driver");
@@ -78,7 +81,17 @@ public class Routes
 				query = "INSERT INTO Location(LocationName, LocationID, Longitude, Latitude)" + "VALUES('"+end+"','"+locIDEnd+"','"+endCoords[0]+"','"+endCoords[1]+"');";
 				statement.executeUpdate(query);
 
-				Location[] environment = gis.locationsWithinRadius(startCoords[0], startCoords[1], getDistance(startCoords, endCoords));
+				String[] str = gis.locationsWithinRadius(startCoords[0], startCoords[1], getDistance(startCoords, endCoords));
+				Location[] environment = new Location[str.length];
+
+				Random rand = new Random();
+				for(int i = 0; i < str.length;i++)
+				{
+					GPSObject obj = new GPSObject(str[i]);
+					environment[i] = new Location(str[i],rand.nextInt() + "",obj);
+
+				}
+
 				LinkedList<Location> wayPoints = computePath(environment);
 
 				int pass = 0;
@@ -133,7 +146,7 @@ public class Routes
 
 	private LinkedList<Location> computePath(Location[] enviro)
 	{
-		LinkedList<Location> path = new LinkedList<>();
+		LinkedList<Location> path = new LinkedList<Location>();
 
 		//Actual Route building happens in here..
 

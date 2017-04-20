@@ -104,7 +104,14 @@ public class NavigationIHandler implements Navigation {
     public Boolean saveRoute(Route rt)
     {
         Routes nR = new Routes();
-        return nR.addRoute(new Route());
+        if(nR.addRoute(new Route()).equals(null))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
 
     }
 

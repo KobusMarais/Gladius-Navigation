@@ -72,7 +72,7 @@ class IndoorThread implements Callable<Locations>
         arr = arr2;
     }
     public Locations call() {
-        return new indoorPathfinding().findIndoor(arr);
+        return new IndoorPathfinding().findIndoor(arr);
     }
 }
 
