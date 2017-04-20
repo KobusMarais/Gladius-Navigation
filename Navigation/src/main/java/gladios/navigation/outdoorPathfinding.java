@@ -1,14 +1,13 @@
 package gladios.navigation;
-import com.sun.xml.internal.ws.api.streaming.XMLStreamWriterFactory;
 import gladios.gis.*;
 import org.jgrapht.*;
+import org.jgrapht.alg.interfaces.AStarAdmissibleHeuristic;
+import org.jgrapht.alg.shortestpath.AStarShortestPath;
+import org.jgrapht.generate.CompleteGraphGenerator;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
-
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Set;
+import java.util.Random;
 
 
 /**
@@ -26,6 +25,8 @@ public class outdoorPathfinding {
      */
     public Locations findOutdoor(Locations loc)
         {
+
+            boolean debug = true;
 
             //We will be receiving a list of locations to find our way around
 
@@ -102,24 +103,76 @@ public class outdoorPathfinding {
             stubs.add(loc.get(1).getName());
 
             //===========================
-            String result = getShortestPath(stubs);
+            String[] result;
+            if(debug)
+            {
+                result = new String[stubs.size()];
+                for(int i = 0; i < stubs.size();i++)
+                {
+                    result[i] = stubs.get(i);
+                }
+            }
+            else
+            {
+                result = getShortestPath(stubs);
+            }
+
+            return compile(result);
 
 
-            return null;
         }
 
-    private String getShortestPath(ArrayList<String> stubs)
+    private String[] getShortestPath(final ArrayList<String> stubs)
     {
+        String[] ret = new String[0];
         //We now construct the graph, and add all locations to one another, calculating their distances between
-        WeightedGraph<String,DefaultWeightedEdge> graph = new SimpleWeightedGraph<String, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+        WeightedGraph<CustomVertex,DefaultWeightedEdge> graph = new SimpleWeightedGraph<CustomVertex, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+        CompleteGraphGenerator<CustomVertex,DefaultWeightedEdge> gen = new CompleteGraphGenerator<CustomVertex, DefaultWeightedEdge>(stubs.size());
+
+        VertexFactory<CustomVertex> vFactory = new VertexFactory<CustomVertex>() {
+
+            private int i = 0;
+            private ArrayList<String> s = stubs;
+            public CustomVertex createVertex() {
+                CustomVertex n = new CustomVertex(s.get(i++));
+                return n;
+            }
+        };
 
         //Draw graph
+        gen.generateGraph(graph,vFactory,null);
 
-        //Add Vertex's
-        for(int i = 0; i < stubs.size();i++)
+        int i = 0;
+        final GISInterface gis = GIS.getInstance();
+        for(DefaultWeightedEdge e : graph.edgeSet())
         {
-            graph.addVertex(stubs.get(i));
+            float[] current = gis.getCoordinates(stubs.get(i));
+            float[] next = gis.getCoordinates(stubs.get(i+1));
+            if(i == stubs.size()-1)
+            {
+
+            }
+            else {
+                graph.setEdgeWeight(e, distanceBetween(current[0],current[1],next[0],next[1]));
+            }
         }
+
+        AStarAdmissibleHeuristic<CustomVertex> v = new AStarAdmissibleHeuristic<CustomVertex>() {
+            public double getCostEstimate(CustomVertex customVertex, CustomVertex v1) {
+                float[] n1 = gis.getCoordinates(customVertex.getName());
+                float[] n2 = gis.getCoordinates(v1.getName());
+                return distanceBetween(n1[0],n1[1],n2[0],n2[1]);
+            }
+        };
+        AStarShortestPath a = new AStarShortestPath(graph,v);
+        CustomVertex begin = new CustomVertex(stubs.get(0));
+        CustomVertex end = new CustomVertex(stubs.get(1));
+        GraphPath p = a.getPath(begin,end);
+
+        String splitt = p.getVertexList().toString();
+        return splitt.split(",");
+
+
 
         /*for(int j = 0; j < stubs.size();j++)
         {
@@ -133,12 +186,20 @@ public class outdoorPathfinding {
             }
         }*/
 
-        return "";
-
-
-
-
     }
+
+    private Locations compile(String[] locs)
+    {
+        Locations ret = new Locations();
+        Random rand = new Random();
+        for(int i = 0; i < locs.length;i++)
+        {
+            GPSObject obj = new GPSObject(locs[i]);
+            ret.addLocation(new Location(locs[i], rand.nextInt() + " ",obj));
+        }
+        return ret;
+    }
+
 
     /**
      *
@@ -200,6 +261,26 @@ public class outdoorPathfinding {
 
     private double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
+    }
+
+
+
+
+
+}
+
+class CustomVertex
+{
+    private String name;
+
+    public CustomVertex(String n)
+    {
+        this.name = n;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
 
