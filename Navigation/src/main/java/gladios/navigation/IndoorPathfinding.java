@@ -41,36 +41,80 @@ public class IndoorPathfinding  {
 	}
 
 	public boolean arePointsOnSamePlane(String start, String dest) {
+		return (heightDifference(start, dest) == 0);
 		/*
 			Checks if the start and end destination are on different levels of a building.
-			
-			The only implementation I could think of is that we will have an exhaustive switch statement for like 7 of the most 
-			popular buildings (IT, Centenary etc.) then we will use string manipulation to check the actual names of the destination
-			and if they are upstairs at all we just use common sense to either return true or false. This is will work because matter 
-			what, indoor navigation will ALWAYS start from ground floor.
-
-			If points are on a different level, we will call heightDifference() to determine how many levels difference there is
-
- 		*/
+		*/
 	}
 
 	public int heightDifference(String start, String dest) {
 		/* Determines the amount of floors the user should go up between the start and destination locations */
+		int numstart = 0;
+		int numdest = 0;
+		while(numstart < start.length()) //gets floors of locations regardless if they are the same building or not(could be useful for IT4-4 to EMS  building)
+		{
+			if(Character.isDigit(start.charAt(numstart))) //gets floor of first location
+			{
+				if(Character.isDigit(dest.charAt(numdest))) //gets floor of second location
+				{
+					if(start.charAt(numstart) - dest.charAt(numdest) == 0)
+					{
+						return 0;
+					}
+					else if(start.charAt(numstart) - dest.charAt(numdest) > 0)
+					{
+						return start.charAt(numstart) - dest.charAt(numdest);
+					}
+					else if(start.charAt(numstart) - dest.charAt(numdest) > 0)
+					{
+						return dest.charAt(numdest) - start.charAt(numstart);
+					}
+				}
+				else
+				{
+					numdest++;
+				}
+			}
+			else
+			{
+				numstart++;
+			}
+		}
+		return 0;
 	}
 
-	public boolean isPointInvalid(float coordx, float coordy) {
+	public boolean isPointInvalid(float currx, float curry,float startx, float starty,float destx, float desty) 
+	{
 		/*
 			Checks if a given point makes a user walk through a wall or room or something equally ridiculous.
 
 			We will achieve this by checking if the coord is equal to an existing room that is NOT our start 
 			or end location, otherwise we assume we are still on track.
 		*/
-	}
-
-	public boolean arePointsIndoors(float ax, float ay, float bx, float by) {
-		/*
-			Function to make sure that points ARE indoors and we're not doing outdoor navigation by accident.
-		*/
+		String name = GISObject.getLocation(currx, curry);
+		if((name == GISObject.getLocation(startx, starty)) || (GISObject.getLocation(currx, curry) == GISObject.getLocation(destx, desty))) //checks if its the start or end location rooms
+		{
+			return false;
+		}
+		else
+		{
+			int count = 0;
+			for(int i = 0; i < name.length(); i++)
+			{
+				if(Character.isDigit(name.charAt(i)))
+				{
+					count++;
+				}
+			}
+			if(count > 1) //2 or more digits means its a specific room for example IT4-4
+			{
+				return true;
+			}
+			else// 1 or less digits means its just the bulding and possibly the level for example IT4
+			{
+				return false;
+			}
+		}
 	}
 
 	/* NB NB NB NB NB NB*/
@@ -94,7 +138,7 @@ public class IndoorPathfinding  {
 			
 			if(route.size() == 0) {
 				if(arePointsOnSamePlane(GISObject.getLocation(currx,curry),GISObject.getLocation(destx,desty)) == false) {
-					route = addStaircase(route);
+					route.add(addStaircase());
 				}
 				ArrayList<Float> beginning = new ArrayList<Float>(0);
 				beginning.add(currx);
@@ -118,14 +162,14 @@ public class IndoorPathfinding  {
 
 			for(i = 0; i < 17; i++) {
 				if(distanceBetweenTwoPoints(xPoints[i],positiveYPoints[i],destx,desty) < smallestDistance) {
-					if(isPointInvalid(xPoints[i],positiveYPoints[i]) == false) {
+					if(isPointInvalid(xPoints[i],positiveYPoints[i],prevx,prevy,destx,desty) == false) {
 						smallestDistance = distanceBetweenTwoPoints(xPoints[i],positiveYPoints[i],destx,desty);
 						smallestx = xPoints[i];
 						smallesty = positiveYPoints[i];
 					}
 				}
 				if(distanceBetweenTwoPoints(xPoints[i],negativeYPoints[i],destx,desty) < smallestDistance) {
-					if(isPointInvalid(xPoints[i],negativeYPoints[i]) == false) {
+					if(isPointInvalid(xPoints[i],negativeYPoints[i],prevx,prevy,destx,desty) == false) {
 						smallestDistance = distanceBetweenTwoPoints(xPoints[i],negativeYPoints[i],destx,desty);
 						smallestx = xPoints[i];
 						smallesty = negativeYPoints[i];
