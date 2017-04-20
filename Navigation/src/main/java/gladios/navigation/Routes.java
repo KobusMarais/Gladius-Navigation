@@ -111,7 +111,6 @@ public class Routes
 					curr = wayPoints.get(track);
 					query = "INSERT INTO Location(LocationName, LocationID, Longitude, Latitude)" + "VALUES('"+curr.getName()+"','"+curr.getLocationID()+"','"+curr.getCoordinates().getLongitude()+"','"+curr.getCoordinates().getLatitude()+"');";
 					statement.executeUpdate(query);
-
 					track++;
 				}
 
@@ -124,7 +123,6 @@ public class Routes
 				{
 					query = "UPDATE RouteWayPoints set WayPoint"+(count + 1)+" = '"+wayPoints.get(count).getName()+"' WHERE RouteName = '"+start+"';";
 					statement.executeUpdate(query);
-
 					count++;
 				}
 
@@ -175,7 +173,6 @@ public class Routes
 	public Boolean removeRoute(Route roo)
 	{
 		if(roo != null) {
-			//routes.put(roo.getName(), roo);
 			routes.remove(roo.getName());
 
 			Connection connect = null;
@@ -193,22 +190,18 @@ public class Routes
 					//return false;
 				}
 
-			//	String start = roo.getLocations().getStartLocation().getName();
-			//	String locIDStart = roo.getLocations().getStartLocation().getLocationID();
-
-			//	String end = roo.getLocations().getEndLocation().getName();
-			//	String locIDEnd = roo.getLocations().getEndLocation().getLocationID();
-
-			//	float[] startCoords = roo.getLocations().getStartLocation().getCoordinates().getLongLatCoords();
-			//	float[] endCoords = roo.getLocations().getEndLocation().getCoordinates().getLongLatCoords();
-
 				statement = connect.createStatement();
-				String query = "DELETE FROM Routes WHERE RouteName = '"+roo.getName()"';";
+				String query = "DELETE FROM Routes WHERE RouteName = '"+roo.getName()+"';";
+				statement.executeUpdate(query);
+				
+				query = "DELETE FROM RouteWayPoints WHERE RouteName = '"+roo.getName()+"';";
 				statement.executeUpdate(query);
 
 				statement.close();
 				connect.commit();
 				connect.close();
+				return true;
+				
 			} catch (Exception exp) {
 				System.err.println(exp.getClass().getName() + ": " + exp.getMessage());
 				System.exit(0);
