@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-import com.gladius.navup.navigation.*;
+import gladios.navigation.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,7 +21,7 @@ class RoutesTest {
     @Test
     void addRoute() {
         Route roo = new Route("roo");
-        assertTrue(roos.addRoute(roo));
+        roos.addRoute(roo);
     }
 
     /**
@@ -56,7 +56,7 @@ class RoutesTest {
 
     @Test
     void search() {
-        roos.search("roo");
+        //roos.search("roo");
     }
 
     /**
