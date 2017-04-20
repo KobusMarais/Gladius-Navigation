@@ -203,7 +203,7 @@ public class Routes
 			//	float[] endCoords = roo.getLocations().getEndLocation().getCoordinates().getLongLatCoords();
 
 				statement = connect.createStatement();
-				String query = "DELETE FROM Routes WHERE RouteName = '"+roo.getName()"';";
+				String query = "DELETE FROM Routes WHERE RouteName = '"+roo.getName()+"';";
 				statement.executeUpdate(query);
 
 				statement.close();
